@@ -66,7 +66,7 @@ class RealSenateElection(BaseSenateElection):
         self._data = sc.get_data(input_cls, '', contest_config, **data_options)
 
         # Build remaining ticket data structure from tickets and randomly shuffle for sampling.
-        for ticket, weight in self._data.tickets_for_count:
+        for ticket, weight in sorted(self._data.tickets_for_count):
             self.add_ballot(ticket, weight)
 
         # Get candidate data.

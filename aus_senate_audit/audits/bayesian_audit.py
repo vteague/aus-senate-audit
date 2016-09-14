@@ -51,7 +51,7 @@ def audit(election, seed, unpopular_freq_threshold, stage_counter=0, alpha=0.05,
     print(
         'Audit of {} election.\n'.format(election.get_type()),
         '  Election ID: {}\n'.format(election.get_election_id()),
-        '  Canadidates: {}\n'.format(election.get_candidates()),
+        '  Candidates: {}\n'.format(election.get_candidates()),
         '  Number of ballots cast: {}\n'.format(
             election.get_num_cast_ballots(),
         ),
@@ -160,5 +160,5 @@ def audit(election, seed, unpopular_freq_threshold, stage_counter=0, alpha=0.05,
                     '  {}'.format(candidate_to_ballots_map[cid]),
                 )
 
-    print('Elasped time: {} seconds.'.format(time() - start_time))
+    print('Elapsed time: {} seconds.'.format(time() - start_time))
     return done

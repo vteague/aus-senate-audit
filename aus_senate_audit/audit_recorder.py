@@ -139,7 +139,7 @@ class AuditRecorder(object):
             f.write('\n'.join([ballot if quick else self.remove_preferences_from_ballot(ballot) for ballot in sample]) + '\n')
         # Write the new ballots in the sample to the audit round file.
         with open(self.get_file_path(AUDIT_ROUND_FILE_NAME.format(ROUND_DIR_NAME, audit_stage)), 'w') as f:
-            f.write('{}\n'.format(','.join(COLUMN_HEADERS + MATCH_HEADERS)) + '\n')
+            f.write('{}\n'.format(','.join(COLUMN_HEADERS + MATCH_HEADERS)))
             f.write('\n'.join([ballot for ballot in sample]) + '\n')
 
     def record_current_audit_round_match_records(self, match_records):
