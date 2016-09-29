@@ -36,7 +36,7 @@ def parse_command_line_args():
         '--num-ballots',
         type=int,
         default=DEFAULT_SIMULATED_SENATE_ELECTION_NUM_BALLOTS,
-        help='The number of ballots cast for a simulated senate election',
+        help='The number of ballots cast for a simulated senate election.',
     )
     parser.add_argument(
         '--num-candidates',

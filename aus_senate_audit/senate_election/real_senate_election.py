@@ -9,7 +9,6 @@ from aus_senate_audit.audit_recorder import AuditRecorder
 from aus_senate_audit.audit_tie_breaker import AuditTieBreaker
 from aus_senate_audit.config_reader import ConfigReader
 from aus_senate_audit.constants import AGGREGATE_BALLOTS_FILE_NAME
-from aus_senate_audit.constants import DATA_DIR_NAME
 from aus_senate_audit.constants import FORMAL_PREFERENCES_CSV_NUM_HEADER_LINES
 from aus_senate_audit.senate_election.base_senate_election import BaseSenateElection
 from aus_senate_audit.senate_election.real_senate_election_results import RealSenateElectionResults
@@ -51,7 +50,10 @@ class RealSenateElection(BaseSenateElection):
         if max_ballots is not None:
             data_options['max_ballots'] = max_ballots
 
-        path_to_formal_preferences_file = '{}/{}'.format(data_file_path, contest_config['aec-data']['formal-preferences'])
+        path_to_formal_preferences_file = '{}/{}'.format(
+            data_file_path,
+            contest_config['aec-data']['formal-preferences'],
+        )
         total_num_lines = sum(1 for _ in open(path_to_formal_preferences_file, 'r'))
         self._n = total_num_lines - FORMAL_PREFERENCES_CSV_NUM_HEADER_LINES
         contest_config['aec-data']['senate-candidates'] \

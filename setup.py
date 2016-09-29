@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 
-from os.path import dirname
-from os.path import join
 from setuptools import find_packages
 from setuptools import setup
 
 
 setup(
     name='aus-senate-audit',
-    version='0.11.0',
+    version='0.13.0',
     license='Apache2',
     author='Berj Chilingirian',
     author_email='berjc@mit.edu',

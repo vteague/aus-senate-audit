@@ -24,14 +24,16 @@ class AuditRecorder(object):
     """ Encapsulates utilities for interacting with information about the audit's progress thus far.
 
     :ivar str state: The abbreviated name of the state whose senate election is being audited.
+    :ivar str audit_dir_name: The name of the directory storing all audit results.
     """
-    def __init__(self, state, audit_dir=AUDIT_DIR_NAME):
-        """ Initializes an :class:`AuditResults` object.
+    def __init__(self, state, audit_dir_name=AUDIT_DIR_NAME):
+        """ Initializes an :class:`AuditRecorder` object.
 
         :param str state: The abbreviated name of the state whose senate election is being audited.
+        :param str audit_dir_name: The name of the directory storing all audit results (default: 'audit_{}').
         """
         self._state = state
-        self.audit_dir = audit_dir
+        self.audit_dir_name = audit_dir_name
         if not exists(self.get_audit_dir_name()):
             makedirs('{}/{}'.format(self.get_audit_dir_name(), ROUND_DIR_NAME))
             self.record_audit_info(0, 0)
@@ -46,7 +48,7 @@ class AuditRecorder(object):
         :returns: The given ballot minus the formal preferences recorded by the ballot.
         :rtype: str
         """
-        return ballot.split('"')[0]  # Works because preferences column is wrapped in quotation marks.
+        return ballot.split('"')[0]  # Works because the preferences column is wrapped in quotation marks.
 
     def get_audit_dir_name(self):
         """ Returns the audit directory name for the given state.
@@ -54,7 +56,7 @@ class AuditRecorder(object):
         :returns: The audit directory name for the given state.
         :rtype: str
         """
-        return self.audit_dir.format(self._state)
+        return self.audit_dir_name.format(self._state)
 
     def get_file_path(self, file_name):
         """ Returns the file path for the given file name within the audit directory.
@@ -84,7 +86,7 @@ class AuditRecorder(object):
                     f.write(new_ballot)
 
     def record_audit_info(self, audit_stage, sample_size):
-        """ Sets information about the audit recored thus far.
+        """ Sets information about the audit recorded thus far.
 
         :param int audit_stage: The new stage of the audit.
         :param int sample_size: The sample size of the audit.
@@ -137,7 +139,11 @@ class AuditRecorder(object):
         # Write the new ballots in the sample to the selected ballots file, without specifying the original preferences.
         with open(SELECTED_BALLOTS_FILE_NAME, 'w') as f:
             f.write('{}\n'.format(','.join(COLUMN_HEADERS)))
-            f.write('\n'.join([ballot if quick else self.remove_preferences_from_ballot(ballot) for ballot in sample]) + '\n')
+            f.write(
+                '\n'.join(
+                    [ballot if quick else self.remove_preferences_from_ballot(ballot) for ballot in sample]
+                ) + '\n'
+            )
         # Write the new ballots in the sample to the audit round file.
         with open(self.get_file_path(AUDIT_ROUND_FILE_NAME.format(ROUND_DIR_NAME, audit_stage)), 'w') as f:
             f.write('{}\n'.format(','.join(COLUMN_HEADERS + MATCH_HEADERS)))

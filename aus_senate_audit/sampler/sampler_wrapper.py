@@ -9,8 +9,6 @@ from aus_senate_audit.sampler.sampler import generate_outputs
 class SamplerWrapper(object):
     """ Wraps the algorithm used for sampling from the cast ballots of the Australian senate election. """
 
-    NUM_HEADER_LINES = 2
-
     def __init__(self, seed, state, sample_increment_size, data_file_path, audit_recorder, quick=False):
         """ Initializes a :class:`SamplerWrapper` object.
 
