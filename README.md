@@ -143,8 +143,12 @@ Stopping because audit confirmed outcome:
 
 # Getting Australian Senate Election Data
 
-The Australian Senate Election data can be retrieved by downloading the ``data.tar.gz`` file at the top-level of this repository.
+The Australian Senate Election data can be downloaded [here](https://drive.google.com/file/d/0B2FYEn1taR3dMTVGWThtbDJuLVk/view?usp=sharing).
 
-This can be done in one of two ways:
+Upon downloading the ``data.tar.gz``, extract its contents with the following command.
 
-(Directions to come soon...)
+```
+tar -xvzf data.tar.gz
+```
+
+The path to the resulting directory, ``data``, may then be used as the value to the ``--data`` option for the ``aus-senate-audit`` tool.
