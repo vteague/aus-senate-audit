@@ -42,6 +42,8 @@ print('All sample size' + str(Allsamplesize)) #Print all sample size
 
 
 
+
+
 plt.xlabel('Sample Size') #Graph
 plt.ylabel('Frequency')
 plt.title('State '+ State +' - Sample Size Graph')
