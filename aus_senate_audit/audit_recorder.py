@@ -6,7 +6,7 @@ from json import load
 from json import dumps
 from os import makedirs
 from os.path import exists
-
+import os
 from aus_senate_audit.constants import AGGREGATE_BALLOTS_FILE_NAME
 from aus_senate_audit.constants import AUDIT_DIR_NAME
 from aus_senate_audit.constants import AUDIT_INFO_FILE_NAME
@@ -18,6 +18,7 @@ from aus_senate_audit.constants import ROUND_DIR_NAME
 from aus_senate_audit.constants import SELECTED_BALLOTS_FILE_NAME
 from aus_senate_audit.constants import AUDIT_STAGE_KEY
 from aus_senate_audit.constants import SAMPLE_SIZE_KEY
+from aus_senate_audit.constants import RESULT_OUTPUT
 
 
 class AuditRecorder(object):
@@ -26,7 +27,7 @@ class AuditRecorder(object):
     :ivar str state: The abbreviated name of the state whose senate election is being audited.
     :ivar str audit_dir_name: The name of the directory storing all audit results.
     """
-    def __init__(self, state, audit_dir_name=AUDIT_DIR_NAME):
+    def __init__(self, state, seed, audit_dir_name=AUDIT_DIR_NAME):
         """ Initializes an :class:`AuditRecorder` object.
 
         :param str state: The abbreviated name of the state whose senate election is being audited.
@@ -34,10 +35,19 @@ class AuditRecorder(object):
         """
         self._state = state
         self.audit_dir_name = audit_dir_name
+        self._seed = seed
+
         if not exists(self.get_audit_dir_name()):
             makedirs('{}/{}'.format(self.get_audit_dir_name(), ROUND_DIR_NAME))
             self.record_audit_info(0, 0)
             self._initialize_aggregate_ballots_file()
+            self._initial_result_file()
+        # else:
+        #     addmore = input("Audit result already exist, do you wish to continue the previous audit? (1/0)")
+        #     addmore = int(addmore)
+        #     if not (addmore == 1):
+        #         repeat = input("Do you wish to repeat the exist audit once more? (1/0)")
+        #         repeat = int (repeat)
 
     @staticmethod
     def remove_preferences_from_ballot(ballot):
@@ -56,7 +66,7 @@ class AuditRecorder(object):
         :returns: The audit directory name for the given state.
         :rtype: str
         """
-        return self.audit_dir_name.format(self._state)
+        return self.audit_dir_name.format(self._state, self._seed)
 
     def get_file_path(self, file_name):
         """ Returns the file path for the given file name within the audit directory.
@@ -72,6 +82,11 @@ class AuditRecorder(object):
         """ Initializes the aggregate ballots file with the appropriate headers. """
         with open(self.get_file_path(AGGREGATE_BALLOTS_FILE_NAME), 'w') as f:
             f.write('{}\n{}\n'.format(','.join(COLUMN_HEADERS), ','.join(COLUMN_HEADER_DELIMS)))
+
+    def _initial_result_file(self):
+
+        with open(self.get_file_path(RESULT_OUTPUT).format(self.get_audit_dir_name()), 'w') as f:
+            f.write('{}_Result:\n'.format(self.get_audit_dir_name()))
 
     def add_new_ballots_to_aggregate(self, path_to_selected_ballots_file):
         """ Adds the completed selected ballots to the aggregate ballots file.
