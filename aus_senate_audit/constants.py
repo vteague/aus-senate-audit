@@ -31,7 +31,7 @@ DEFAULT_SIMULATED_SENATE_ELECTION_NUM_CANDIDATES = 100
 DEFAULT_UNPOPULAR_FREQUENCY_THRESHOLD = 0.03
 
 # The default number of ballots to add to a growing sample at the start of an audit stage.
-DEFAULT_SAMPLE_INCREMENT_SIZE = 1500
+DEFAULT_SAMPLE_INCREMENT_SIZE = 1000
 
 # The default random number seed value.
 DEFAULT_SEED_VALUE = 1
@@ -47,12 +47,13 @@ SAMPLE_SIZE_KEY = 'sample_size'
 CONFIG_FILE_PATH = 'aec_fed2016.json'
 
 # The names of files created by the aus-senate-audit software.
-AUDIT_DIR_NAME = 'audit_{}'
-ROUND_DIR_NAME = 'rounds'
+AUDIT_DIR_NAME = 'audit_{}_seed_{}'
+ROUND_DIR_NAME = 'stages'
 AUDIT_INFO_FILE_NAME = 'info.json'
-AUDIT_ROUND_FILE_NAME = '{}/round_{}.csv'
+AUDIT_ROUND_FILE_NAME = '{}/stage_{}.csv'
 AGGREGATE_BALLOTS_FILE_NAME = 'aggregate.csv'
 SELECTED_BALLOTS_FILE_NAME = 'selected_ballots.csv'
+RESULT_OUTPUT = '{}_result.txt'
 
 # The column headers of a formal preferences file (first header line).
 COLUMN_HEADERS = [
