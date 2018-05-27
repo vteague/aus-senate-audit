@@ -60,9 +60,10 @@ for i in Allsamplesize:
 start = minsize - 500
 end = maxsize + 500
 edge = []
+ClassInterval = 1000 # Specify the class interval
 while start <= end:
     edge.append(start)
-    start = start+2000
+    start = start+ClassInterval
 
 plt.hist(Allsamplesize, bins = edge, edgecolor='b', rwidth= 0.8)
 if len(Timeoutseed) > 0:
